@@ -285,6 +285,7 @@ public class RestRepository implements Closeable, StatsAware {
         List<List<Map<String, Object>>> info = client.targetShards(resourceR.index());
 
         // if client-nodes routing is used, allow non-http clients
+        //Why this var is called httpNode if it comes with non-http-nodes.
         Map<String, Node> httpNodes = client.getHttpNodes(clientNodesOnly);
 
         if (httpNodes.isEmpty()) {
@@ -334,7 +335,7 @@ public class RestRepository implements Closeable, StatsAware {
         }
 
         Set<Integer> seenShards = new LinkedHashSet<Integer>();
-
+        Node httpNode = null;
         for (List<Map<String, Object>> shardGroup : info) {
             for (Map<String, Object> shardData : shardGroup) {
                 Shard shard = new Shard(shardData);
@@ -349,10 +350,26 @@ public class RestRepository implements Closeable, StatsAware {
                         if (seenShards.add(shard.getName())) {
                             shards.put(shard, node);
                         }
-                    }
-                    else {
+                        //here is the validation for non-http-nodes
+                        //if the node is non-http so the ip Address will be null, generating a NullPointerException later
+                    } else if (node.hasHttp() && node.getIpAddress() != null) {
                         shards.put(shard, node);
                         break;
+                    } else {
+                    	//Here we get the httpNode (one of them) and set the shard to be searched
+                    	//I will improve this to use a list of servers to a better distribution 
+                    	if (httpNode == null) {
+                    		Set<String> keys = httpNodes.keySet();
+                    		for (String key : keys) {
+                    			Node n = httpNodes.get(key);
+                    			if (n.hasHttp()) {
+                    				httpNode = n;
+                    				break;
+                    			}
+                    		}
+                    	}
+                    	shards.put(shard, httpNode);
+                    	break;
                     }
                 }
             }
