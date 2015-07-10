@@ -162,8 +162,9 @@ public class QueryBuilder {
                 sb.append("&");
             }
         }
-
-        return sb.toString();
+        String value = sb.toString();
+        System.out.println(">>>>: "+value);
+        return value;
     }
 
     public ScrollQuery build(RestRepository client, ScrollReader reader) {

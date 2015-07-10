@@ -358,6 +358,7 @@ public class RestRepository implements Closeable, StatsAware {
                     } else {
                     	//Here we get the httpNode (one of them) and set the shard to be searched
                     	//I will improve this to use a list of servers to a better distribution 
+                    	//TODO: Marcelo, make it better please XD
                     	if (httpNode == null) {
                     		Set<String> keys = httpNodes.keySet();
                     		for (String key : keys) {

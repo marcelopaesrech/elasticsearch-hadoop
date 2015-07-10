@@ -306,6 +306,7 @@ public class EsInputFormat<K, V> extends InputFormat<K, V> implements org.apache
             // NB: the left assignment is not needed since method override
             // the writable content however for consistency, they are below
             currentKey = setCurrentKey(key, next[0]);
+            ((LinkedMapWritable) next[1]).put(new Text("_id"), (Text)next[0]);
             currentValue = setCurrentValue(value, next[1]);
 
             // keep on counting

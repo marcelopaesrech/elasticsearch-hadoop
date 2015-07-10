@@ -1,5 +1,5 @@
 description = 'Elasticsearch for Apache Hadoop'
-
+distro = 'hadoopYarn'
 buildscript {
     repositories {
         mavenCentral()

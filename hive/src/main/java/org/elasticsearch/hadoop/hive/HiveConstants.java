@@ -33,6 +33,7 @@ interface HiveConstants {
     String CHAR_WRITABLE = "org.apache.hadoop.hive.serde2.io.HiveCharWritable";
     String TABLE_LOCATION = "location";
 
+    String MAPPING_ID = "es.mapping.id";
     String MAPPING_NAMES = "es.mapping.names";
     String COLUMN_COMMENTS = "columns.comments";
 

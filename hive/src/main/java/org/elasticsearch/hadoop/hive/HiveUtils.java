@@ -96,7 +96,10 @@ abstract class HiveUtils {
 
     static FieldAlias alias(Settings settings) {
         Map<String, String> aliasMap = SettingsUtils.aliases(settings.getProperty(HiveConstants.MAPPING_NAMES), true);
-
+        String idProperty = settings.getProperty(HiveConstants.MAPPING_ID);
+        if (idProperty != null) {
+        	aliasMap.put(idProperty, "_id");
+        }
         // add default aliases for serialization (_colX -> mapping name)
         Map<String, String> columnMap = columnMap(settings);
 

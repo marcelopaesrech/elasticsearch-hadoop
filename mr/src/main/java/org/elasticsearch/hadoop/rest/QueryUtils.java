@@ -145,7 +145,9 @@ abstract class QueryUtils {
             }
 
             // translate the Uri params as a Query String Query
-            return String.format(QUERY_STRING_QUERY, sb.substring(0, sb.length() - 1));
+            String result = String.format(QUERY_STRING_QUERY, sb.substring(0, sb.length() - 1));
+            System.out.println(result);
+            return result;
 
         }
         return MATCH_ALL;
